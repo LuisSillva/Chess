@@ -27,15 +27,26 @@ def main():
     loadImages()
     running = True
     sqSelected = ()
+    playerClicks = [] 
     
     while running:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 running = False
-            elif e.type == pg.MOUSEBUTTOMDOWN:
+            elif e.type == pg.MOUSEBUTTONDOWN:
                 location = pg.mouse.get_pos()
                 col = location[0]//SQ_SIZE
                 row = location[1]//SQ_SIZE
+                if sqSelected == (row, col):
+                    sqSelected = ()
+                    playerClicks = []
+                sqSelected = (row, col)
+            else:
+                sqSelected = (row, col)
+                playerClicks.append(sqSelected)
+            if len(playerClicks) == 2:
+                pass
+
         drawMatchState(screen, ms)
         clock.tick(MAX_FPS)
         pg.display.flip()
